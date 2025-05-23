@@ -1,0 +1,24 @@
+name: Run Azure Login with the Service Principal secret
+on: [workflow_dispatch]
+
+permissions:
+      id-token: write
+      contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Azure Login action
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        enable-AzPSSession: true
+    
+    - name: Azure CLI script
+      uses: azure/cli@v2
+      with:
+        azcliversion: latest
+        inlineScript: |
+          az account show
+          # You can write your Azure CLI inline scripts here.
