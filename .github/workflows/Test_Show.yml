@@ -20,5 +20,5 @@ jobs:
       with:
         azcliversion: latest
         inlineScript: |
-          az storage container list --account-name iamazurelab39874cdaa --auth-mode login
+          az storage blob list --account-name iamazurelab39874cdaa --container-name flag --auth-mode login
           # You can write your Azure CLI inline scripts here.
