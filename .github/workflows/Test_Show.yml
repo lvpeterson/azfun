@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Azure Login action
-      uses: azure/login@v1
+      uses: azure/login@v2
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         enable-AzPSSession: true
@@ -20,17 +20,5 @@ jobs:
       with:
         azcliversion: latest
         inlineScript: |
-          az account show
+          az storage container list --account-name iamazurelab39874cdaa --auth-mode login
           # You can write your Azure CLI inline scripts here.
-          
-    - name: Download flag
-      run: |
-          az storage blob download \
-            --account-name iamazurelab39874cdaa \
-            --container-name flag \
-            --name flag.txt \
-            --file flag.txt \
-            --auth-mode login
-      
-    - name: Read flag
-      run: cat flag.txt
