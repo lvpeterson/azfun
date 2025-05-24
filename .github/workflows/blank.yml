@@ -1,0 +1,30 @@
+name: Get Flag
+on: [workflow_dispatch]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  get-flag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Azure login using federated identity
+        uses: azure/login@v1
+        with:
+          client-id: 693fde05-a908-42e2-9aec-e7a3ce3f6272      # Replace with your managed identity client ID
+          tenant-id: azure.training.hacktricks.xyz                       # Replace with your tenant ID
+          subscription-id: 56c0b220-b032-47c9-b6af-69521f9c26e3           # Replace with your subscription ID
+          enable-AzPSSession: true
+
+      - name: Download flag blob
+        run: |
+          az storage blob download \
+            --account-name <STORAGE_ACCOUNT_NAME> \
+            --container-name flag \
+            --name flag.txt \
+            --file flag.txt \
+            --auth-mode login
+
+      - name: Show flag content
+        run: cat flag.txt
